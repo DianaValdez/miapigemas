@@ -17,27 +17,44 @@ app.use(bodyParser.json());
 //app.get(`/api/product/:productId`, productCtrl.getProducts)
 //app.post(`/api/product`,productCtrl.saveProduct)
 
+
+
+
+
+
 //******************PUT***************************
 
-app.put(`/api/productGemas/:productGemasId`,(req,  res) =>{
+app.put('/api/productGemas/:productGemasId',(req,  res) =>{
 	let productGemasId = req.params.productGemasId
 	let update = req.body
+	
 	ProductGemas.findByIdAndUpdate(productGemasId, update, (err, productGemasUpdated)=>{
-		if (err) res.status(500).send({message: `Error al actualizar la gema ${err}`})
-			res.status(200).send({productGemas: productGemasUpdated})
+		//productGemas.push(update);
+			if (err) res.status(500).send({message: `Error al actualizar la gema ${err}`})
+				res.status(200).send({productGemas: productGemasUpdated})
+		
 	})
-})
+
+});
+
+
+
+
+
+
+
+
 
 //*******************DELETE*********************
 app.delete('/api/productGemas/:productGemasId', (req, res)=> {
 		let productGemasId = req.params.productGemasId
 		ProductGemas.findById(productGemasId, (err, productGemas)=>{
 			if (err) res.status(500).send({message: `Error al borrar la gema ${err}`})
-		productGemas.remove(err=>{
-			
-			if (err) res.status(500).send({message: `Error al eliminar la gema ${err}`})
-					res.status(200).send({message: `Producto eliminado`})
-		})
+			productGemas.remove(err=>{
+				
+				if (err) res.status(500).send({message: `Error al eliminar la gema ${err}`})
+						res.status(200).send({message: `Producto eliminado`})
+			})
 		})
   		
 });
@@ -51,7 +68,7 @@ app.get('/api/productGemas/', (req,res)=>{
 		if(!productGemas) return res.status(400).send({message: `La gema no existe`})
 		res.status(200).send({productGemas});
 	})
-})
+});
 //****************GET-ONE PRODUCT*************************
 app.get('/api/productGemas/:productGemasId', (req,res)=>{
 	let productGemasId = req.params.productGemasId
@@ -61,17 +78,20 @@ app.get('/api/productGemas/:productGemasId', (req,res)=>{
 		if(!productGemas) return res.status(400).send({message: `La gema no existe`})
 		res.send(200,{productGemas});	
 	})
-})
+});
 //*******************POST*****************************
 app.post('/api/productGemas', (req,res)=>{
 	console.log(req.body)
 	let productGemas = new ProductGemas()
 	productGemas.name = req.body.name;
 	productGemas.price = req.body.price;
-	productGemas.images = req.body.images;
+	productGemas.img = req.body.img;
 	productGemas.stock = req.body.stock;
 	productGemas.discounts = req.body.discounts;
 	productGemas.reviews = req.body.reviews;
+	
+
+
 
 	productGemas.save((err,productGemasStored)=>{
 		if(err) res.status(500).send({message:`Error al registrar la gema en la BD: ${err}`})

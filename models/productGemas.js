@@ -7,23 +7,22 @@ const ProductSchema = Schema({
 
 	name: String,
 	price: Number,
-	img: {
-		type: String,
-		enum: ['diam.png','zafir.png','rubi.png']
-	},
+	img:   String,
 	stock: Number,
 	discounts: {
 		type: Number,
-		enum: ['10','15','25','35']
+		enum: [10,15,25,35]
 	},
 	
-	reviews:{
-				
-				stars: ['1','2','3','4','5'], 
-				coment: String, 
-				author: String,
-				
-	},
+	reviews : [
+		{
+			
+			stars: Number, 
+			comment: String, 
+			author: String	
+		}	
+	]
+
 });
 
 			
